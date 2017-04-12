@@ -1,0 +1,32 @@
+{
+  "name": "lark-autoloader",
+  "version": "1.0.0",
+  "description": "A module loader for lark apps",
+  "engines": {
+    "node": ">=7.6"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/eslint index.js example/** source/** && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should --recursive test",
+    "debug": "node --inspect-brk=9229 example/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larkjs/lark-autoloader.git"
+  },
+  "author": "Sun Haohao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larkjs/lark-autoloader/issues"
+  },
+  "homepage": "https://github.com/larkjs/lark-autoloader#readme",
+  "dependencies": {
+    "vi-misc": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.2.0",
+    "should": "^11.2.1"
+  }
+}
