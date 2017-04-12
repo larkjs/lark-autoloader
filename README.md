@@ -1,2 +1,2 @@
 # lark-autoloader
-An module autoloader for lark apps
+A module autoloader for lark apps
