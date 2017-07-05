@@ -17,3 +17,20 @@ rules:
   semi:
     - error
     - always
+  spellcheck/spell-checker:
+    - 1
+    - 
+      comments: true
+      strings: true
+      identifiers: true
+      lang: en_US
+      skipWords:
+        - autoloader
+        - directoryfiles
+        - fs
+        - extname
+        - basename
+        - js
+        - utils
+plugins:
+  - spellcheck

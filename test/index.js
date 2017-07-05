@@ -1,8 +1,12 @@
 'use strict';
 
-const $ = require('../example/app');
+const example = require('../example/app');
 
 describe('auto loader', () => {
+    before(async () => {
+        await example();
+    });
+
     it('should be accessible', (done) => {
         $.models.Logic.should.be.an.instanceof(Function);
         $.models.Logic().should.be.exactly("Logic");
