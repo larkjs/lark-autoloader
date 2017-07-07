@@ -1,6 +1,6 @@
 'use strict';
 
-const example = require('../example/app');
+const example = require('../example');
 
 describe('auto loader', () => {
     before(async () => {
