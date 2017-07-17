@@ -1,6 +1,6 @@
 {
   "name": "lark-autoloader",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A module loader for lark apps",
   "engines": {
     "node": ">=7.6"
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/larkjs/lark-autoloader#readme",
   "dependencies": {
     "directoryfiles": "^2.0.0",
-    "vi-misc": "^1.2.0"
+    "vi-misc": "^1.9.0"
   },
   "devDependencies": {
     "eslint": "^3.17.1",

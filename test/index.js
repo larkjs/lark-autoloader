@@ -7,14 +7,13 @@ describe('auto loader', () => {
         await example();
     });
 
-    it('should be accessible', (done) => {
-        $.models.Logic.should.be.an.instanceof(Function);
-        $.models.Logic().should.be.exactly("Logic");
+    it('should be accessible', async () => {
+        $.models.api.Logic.should.be.an.instanceof(Function);
+        $.models.api.Logic().should.be.exactly("Logic");
         $.lib.Utils.should.be.an.instanceof(Object);
         $.lib.Utils.toolA.should.be.an.instanceof(Function);
         $.lib.Utils.toolB.should.be.an.instanceof(Function);
         $.lib.Utils.toolA().should.be.exactly("A");
         $.lib.Utils.toolB().should.be.exactly("B");
-        done();
     });
 });

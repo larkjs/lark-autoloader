@@ -25,12 +25,16 @@ rules:
       identifiers: true
       lang: en_US
       skipWords:
+        - api
         - autoloader
-        - directoryfiles
-        - fs
-        - extname
         - basename
+        - dao
+        - directoryfiles
+        - extname
+        - fs
         - js
+        - param
+        - redis
         - utils
 plugins:
   - spellcheck
