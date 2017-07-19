@@ -54,7 +54,7 @@ async function loadDirectory(directoryPath) {
  * Register a module
  **/
 function registerModule(object, filePath, key, ...superKeys) {
-    if (superKeys.length <= 0) {
+    if (superKeys.length < 0) {
         return;
     }
     superKeys = superKeys.reverse();
