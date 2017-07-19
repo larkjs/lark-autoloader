@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/larkjs/lark-autoloader#readme",
   "dependencies": {
+    "debug": "^2.6.8",
     "directoryfiles": "^2.0.0",
     "vi-misc": "^1.9.0"
   },

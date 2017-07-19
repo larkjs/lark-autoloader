@@ -14,9 +14,11 @@ const DirectoryFiles  = require('directoryfiles');
 
 class AutoLoader {
     constructor(modules = {}) {
+        debug('construct');
         this.modules = modules;
     }
     async load(directoryPath = '') {
+        debug(`load ${directoryPath}`);
         const directory = await loadDirectory(directoryPath);
         Object.assign(this.modules, directory.toObject());
         misc.object.each(this.modules, (filePath, key, ...superKeys) => {
