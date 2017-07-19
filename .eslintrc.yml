@@ -36,5 +36,6 @@ rules:
         - param
         - redis
         - utils
+        - string
 plugins:
   - spellcheck

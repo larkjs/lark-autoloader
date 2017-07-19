@@ -1,6 +1,8 @@
 'use strict';
 
-const example = require('../example');
+const example     = require('lark-autoloader/example');
+const path        = require('path');
+const AutoLoader  = require('lark-autoloader')
 
 describe('auto loader', () => {
     before(async () => {
@@ -15,5 +17,11 @@ describe('auto loader', () => {
         $.lib.Utils.toolB.should.be.an.instanceof(Function);
         $.lib.Utils.toolA().should.be.exactly("A");
         $.lib.Utils.toolB().should.be.exactly("B");
+    });
+
+    it('should be ok create a autoloaer', async () => {
+        const auto = new AutoLoader();
+        await auto.load(path.join(__dirname, '../example/lib'));
+        auto.modules.Utils.should.be.ok;
     });
 });

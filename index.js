@@ -54,13 +54,10 @@ async function loadDirectory(directoryPath) {
  * Register a module
  **/
 function registerModule(object, filePath, key, ...superKeys) {
-    if (superKeys.length < 0) {
-        return;
-    }
     superKeys = superKeys.reverse();
 
     let pointer = misc.object.getByKeys(object, ...superKeys);
-    assert(pointer !== undefined, 'Autoloader.modules seems has been modified unexpectly');
+    assert(pointer !== undefined, 'Autoloader.modules seems has been modified unexpectedly');
 
     debug(`register ${filePath}`);
     Object.assign(pointer, {
