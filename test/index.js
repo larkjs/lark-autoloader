@@ -22,6 +22,6 @@ describe('auto loader', () => {
     it('should be ok create a autoloaer', async () => {
         const auto = new AutoLoader();
         await auto.load(path.join(__dirname, '../example/lib'));
-        auto.modules.Utils.should.be.ok;
+        auto.target.Utils.should.be.ok;
     });
 });

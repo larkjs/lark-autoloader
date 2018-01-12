@@ -4,6 +4,7 @@
 process.mainModule = module;
 
 const assert      = require('assert');
+const path        = require('path');
 const AutoLoader  = require('lark-autoloader');
 
 global.$ = {};
@@ -20,7 +21,7 @@ async function main() {
 
     const autoloader2 = new AutoLoader();
     await autoloader2.load();
-    const _ = autoloader2.modules;
+    const _ = autoloader2.target;
     assert(_.lib.Utils.toolA() === 'A');
     assert(_.lib.Utils.toolB() === 'B');
     assert(_.models.api.Logic() === 'Logic');

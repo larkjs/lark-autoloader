@@ -13,16 +13,20 @@ const path            = require('path');
 const DirectoryFiles  = require('directoryfiles');
 
 class AutoLoader {
-    constructor(modules = {}) {
+    constructor(target = {}, process = null) {
         debug('construct');
-        this.modules = modules;
+        process = process || defaultProcess(target);
+        assert(target instanceof Object, 'Invalid target, should be an object');
+        assert(process instanceof Function, 'Invalid processor, should be a function');
+        this.target = target;
+        this.process = process;
     }
     async load(directoryPath = '') {
         debug(`load ${directoryPath}`);
         const directory = await loadDirectory(directoryPath);
-        Object.assign(this.modules, directory.toObject());
-        misc.object.each(this.modules, (filePath, key, ...superKeys) => {
-            registerModule(this.modules, filePath, key, ...superKeys);
+        misc.object.each(directory, (filePath, ...reverseKeys) => {
+            const keys = reverseKeys.reverse();
+            this.process(filePath, keys);
         });
     }
 }
@@ -31,7 +35,7 @@ class AutoLoader {
  * Load a directory with DirectoryFiles
  * @param directoryPath   If it's a relative path, it will be considered as relative to the path of
  *                        process.mainModule
- * @return directory      It's an instance of DirectoryFiles
+ * @return directory      Directory files in a tree (object)
  **/
 async function loadDirectory(directoryPath) {
     directoryPath = misc.path.absolute(directoryPath);
@@ -40,31 +44,34 @@ async function loadDirectory(directoryPath) {
     const name = path.relative(misc.path.root, directoryPath);
     assert(!name.startsWith('.'), `Can not access directory at ${directoryPath}`);
 
-    let directory = new DirectoryFiles();
-    await directory.load(name);
+    let directory = new DirectoryFiles(name);
+    await directory.ready();
 
-    directory = directory
-        .filter(filePath => ['.js', '.node', '.json'].includes(path.extname(filePath)))
-        .mapKeys(key => path.basename(key, path.extname(key)));
-
-    return directory;
+    return directory.tree;
 }
 
-/**
- * Register a module
- **/
-function registerModule(object, filePath, key, ...superKeys) {
-    superKeys = superKeys.reverse();
 
-    let pointer = misc.object.getByKeys(object, ...superKeys);
-    assert(pointer !== undefined, 'Autoloader.modules seems has been modified unexpectedly');
+function defaultProcess(target) {
+    function registerModule(filePath, keys) {
+        let key = keys.pop();
+        let pointer = misc.object.pointByKeys(target, true, ...keys);
+        assert(pointer !== undefined, 'Autoloader.target seems has been modified unexpectedly');
 
-    debug(`register ${filePath}`);
-    Object.assign(pointer, {
-        get [key]() {
+        assert('string' === typeof key, 'Invalid key type, should be a string');
+
+        let extname = path.extname(key).toLowerCase();
+        if (!['.js', '.node', '.json'].includes(extname)) {
+            return;
+        }
+        key = path.basename(key, extname);
+        
+        debug(`register ${filePath}`);
+        pointer.__defineGetter__(key, () => {
+            debug(`require ${filePath}`);
             return require(filePath);
-        },
-    });
+        });
+    }
+    return registerModule;
 }
 
 module.exports = AutoLoader;
